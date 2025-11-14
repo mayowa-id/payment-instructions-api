@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const serverless = require('serverless-http')
 const bodyParser = require('body-parser');
 const paymentInstructionsRouter = require('../src/routes/paymentInstructions');
 const errorHandler = require('../src/middleware/errorHandler');
@@ -48,4 +49,4 @@ app.use(errorHandler);
 //   });
 // }
 
-module.exports = app;
+module.exports = serverless(app);
