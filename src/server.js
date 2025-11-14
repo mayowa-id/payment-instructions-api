@@ -20,9 +20,15 @@ app.use('/payment-instructions', paymentInstructionsRouter);
 
 app.use(errorHandler);
 
-// Health check
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Payment Instructions API',
+    endpoints: {
+      health: '/health',
+      paymentInstructions: '/payment-instructions'
+    }
+  });
 });
 
 // 404 for unmatched routes
