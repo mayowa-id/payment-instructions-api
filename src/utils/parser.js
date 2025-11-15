@@ -113,14 +113,13 @@ function parseCredit(origWords, words) {
 
   const amountStr = words[1];
   
-  // ✅ Check for decimal BEFORE parsing
   if (amountStr.includes('.')) {
-    throw { code: 'AM01', reason: 'Amount must be a whole number' };
+    throw { code: 'AP00', reason: 'Amount must be a whole number' };
   }
 
   const amount = parseInt(amountStr, 10);
   if (isNaN(amount) || !Number.isInteger(amount) || amount <= 0) {
-    throw { code: 'AM01', reason: 'Amount must be a positive integer' };
+    throw { code: 'AP00', reason: 'Amount must be a positive integer' };
   }
 
   const currency = words[2];
