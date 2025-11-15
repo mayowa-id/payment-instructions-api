@@ -68,11 +68,13 @@ function parseDebit(origWords, words) {
     throw { code: 'SY02', reason: 'Invalid keyword order for DEBIT format' };
   }
 
-const amount = parseInt(parsed.amount);
-if (parsed.amount.includes('.') || parsed.amount !== amount.toString()) {
-  throw { code: 'AM01', reason: 'Amount must be a whole number' };
-}
+  const amountStr = words[1]; 
+  
+  if (amountStr.includes('.')) {
+    throw { code: 'AM01', reason: 'Amount must be a whole number' };
+  }
 
+  const amount = parseInt(amountStr, 10);  
   if (isNaN(amount) || !Number.isInteger(amount) || amount <= 0) {
     throw { code: 'AM01', reason: 'Amount must be a positive integer' };
   }
@@ -110,6 +112,12 @@ function parseCredit(origWords, words) {
   }
 
   const amountStr = words[1];
+  
+  // ✅ Check for decimal BEFORE parsing
+  if (amountStr.includes('.')) {
+    throw { code: 'AM01', reason: 'Amount must be a whole number' };
+  }
+
   const amount = parseInt(amountStr, 10);
   if (isNaN(amount) || !Number.isInteger(amount) || amount <= 0) {
     throw { code: 'AM01', reason: 'Amount must be a positive integer' };
