@@ -68,9 +68,11 @@ function parseDebit(origWords, words) {
     throw { code: 'SY02', reason: 'Invalid keyword order for DEBIT format' };
   }
 
-  const amountStr = words[1];
-  const amount = parseInt(amountStr, 10);
-  // Basic: Must be integer >0 (no decimals via parseInt check)
+const amount = parseInt(parsed.amount);
+if (parsed.amount.includes('.') || parsed.amount !== amount.toString()) {
+  throw { code: 'AM01', reason: 'Amount must be a whole number' };
+}
+
   if (isNaN(amount) || !Number.isInteger(amount) || amount <= 0) {
     throw { code: 'AM01', reason: 'Amount must be a positive integer' };
   }
