@@ -3,21 +3,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
-// Logs for boot debug
 console.log('Starting Express app...');
-
-// Import routes and middleware
 const paymentInstructionsRouter = require('../src/routes/paymentInstructions');
 const errorHandler = require('../src/middleware/errorHandler');
 
-// Init app
 const app = express();
 
-// Middleware (morgan can be slow; comment if testing)
 app.use(helmet());
 app.use(cors());
-// app.use(morgan('combined')); // Comment temporarily if logs slow boot
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -27,7 +20,6 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Payment instructions (POST only)
 app.use('/payment-instructions', paymentInstructionsRouter);
 
 // Root
